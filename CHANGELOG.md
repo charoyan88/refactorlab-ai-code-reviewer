@@ -8,9 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [v1.1.0] - 2024-03-15
 
 ### Added
-- Support for Laravel 12 (illuminate components ^12.0)
-- Support for PHP 8.3 and 8.4
-- Updated testbench to support both ^8.0 and ^9.0
+- Added Laravel 12 support
+- Added support for PHP 8.3 and 8.4
+- Updated illuminate/support and testbench constraints
 
 ## [v1.0.0] - 2023-11-30
 
