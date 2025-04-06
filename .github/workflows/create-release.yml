@@ -1,0 +1,64 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Extract changelog section
+        id: extract_changelog
+        run: |
+          VERSION=${{ steps.get_version.outputs.VERSION }}
+          # Remove 'v' prefix for matching in CHANGELOG.md
+          VERSION_NO_V=${VERSION#v}
+          
+          # Extract the section for this version
+          echo "CHANGELOG_SECTION<<EOF" >> $GITHUB_OUTPUT
+          awk -v ver="$VERSION_NO_V" '
+            BEGIN { found=0; buffer="" }
+            /^## \[?'$VERSION_NO_V'\]?/ { found=1; next }
+            /^## / { if (found) exit }
+            found { buffer = buffer $0 "\n" }
+            END { print buffer }
+          ' CHANGELOG.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          
+          # Check if we found any content
+          if [ -z "$CHANGELOG_SECTION" ]; then
+            echo "::error::No changelog section found for version $VERSION"
+            exit 1
+          fi
+
+      - name: Create GitHub Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.get_version.outputs.VERSION }}
+          CHANGELOG: ${{ steps.extract_changelog.outputs.CHANGELOG_SECTION }}
+        run: |
+          # Create release using gh CLI
+          gh release create "$VERSION" \
+            --title "$VERSION" \
+            --notes "$CHANGELOG" \
+            --verify-tag \
+            || {
+              echo "::error::Failed to create release for $VERSION"
+              exit 1
+            }
+          
+          echo "::notice::Successfully created release for $VERSION" 
