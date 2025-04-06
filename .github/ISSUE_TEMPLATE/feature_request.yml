@@ -1,0 +1,60 @@
+name: Feature Request
+description: Suggest a new feature or improvement for the AI Code Reviewer package
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to suggest a new feature for the AI Code Reviewer package. We appreciate your ideas to make this tool better!
+        
+  - type: checkboxes
+    attributes:
+      label: Prerequisites
+      description: Please ensure you've completed these steps before submitting a feature request
+      options:
+        - label: I have verified this feature doesn't already exist by checking the documentation
+          required: true
+        - label: I have searched existing issues and pull requests to make sure this hasn't been suggested before
+          required: true
+          
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Description
+      description: Is your feature request related to a problem? Please describe.
+      placeholder: I'm frustrated when [...] happens and would like a solution that [...]
+    validations:
+      required: true
+      
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like to see implemented
+      placeholder: The package should provide a way to [...]
+    validations:
+      required: true
+      
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Describe any alternative solutions or features you've considered
+      
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Add any other context, code examples, or references about the feature request here
+      
+  - type: dropdown
+    id: importance
+    attributes:
+      label: Importance
+      description: How important is this feature to your use case?
+      options:
+        - Nice to have
+        - Important
+        - Critical
+    validations:
+      required: true 
