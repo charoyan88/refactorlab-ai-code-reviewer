@@ -13,15 +13,17 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php: [8.2]
-        laravel: [11.*]
+        php: [8.2, 8.3, 8.4]
+        laravel: [11.*, 12.*]
         stability: [prefer-stable]
+        exclude:
+          # Laravel 12 requires PHP 8.2 or higher, so no need to exclude anything
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }}
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
