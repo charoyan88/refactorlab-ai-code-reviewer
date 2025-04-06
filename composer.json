@@ -1,0 +1,43 @@
+{
+    "name": "refactorlab/ai-code-reviewer",
+    "description": "AI-powered code review tool for Laravel, integrated with GitHub and OpenAI.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "RefactorLab",
+            "email": "hello@refactorlab.dev"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^11.0",
+        "illuminate/http": "^11.0",
+        "illuminate/routing": "^11.0",
+        "guzzlehttp/guzzle": "^7.8",
+        "openai-php/client": "^0.8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "orchestra/testbench": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "RefactorLab\\AICodeReviewer\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "RefactorLab\\AICodeReviewer\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "RefactorLab\\AICodeReviewer\\AIServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+} 
